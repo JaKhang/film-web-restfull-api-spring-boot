@@ -1,8 +1,7 @@
 package com.nlu.filmweb.service.impl;
 
-import com.nlu.filmweb.dto.CommonCreationDTO;
-import com.nlu.filmweb.dto.CommonDTO;
-import com.nlu.filmweb.entity.Quality;
+import com.nlu.filmweb.payload.request.CommonRequest;
+import com.nlu.filmweb.payload.response.CommonResponse;
 import com.nlu.filmweb.entity.Status;
 import com.nlu.filmweb.exception.ResourceNotFoundException;
 import com.nlu.filmweb.service.CommonService;
@@ -20,16 +19,16 @@ public class DefaultStatusService extends CommonService<Status> {
         super.setCommonRepository(commonRepository);
     }
     @Override
-    public CommonDTO update(Long id, CommonCreationDTO commonCreationDTO) {
+    public CommonResponse update(Long id, CommonRequest commonRequest) {
         var status = commonRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(COUNTRY, ID, id));
-        status.setCode(commonCreationDTO.getCode());
-        status.setName(commonCreationDTO.getName());
-        return mapper.map(status, CommonDTO.class);
+        status.setCode(commonRequest.getCode());
+        status.setName(commonRequest.getName());
+        return mapper.map(status, CommonResponse.class);
     }
 
     @Override
-    public CommonDTO insert(CommonCreationDTO commonCreationDTO) {
-        var status = mapper.map(commonCreationDTO, Status.class);
-        return mapper.map(commonRepository.save(status), CommonDTO.class);
+    public CommonResponse insert(CommonRequest commonRequest) {
+        var status = mapper.map(commonRequest, Status.class);
+        return mapper.map(commonRepository.save(status), CommonResponse.class);
     }
 }

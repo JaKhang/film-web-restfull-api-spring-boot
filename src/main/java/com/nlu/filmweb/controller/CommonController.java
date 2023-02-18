@@ -1,7 +1,7 @@
 package com.nlu.filmweb.controller;
 
-import com.nlu.filmweb.dto.CommonCreationDTO;
-import com.nlu.filmweb.dto.CommonDTO;
+import com.nlu.filmweb.payload.request.CommonRequest;
+import com.nlu.filmweb.payload.response.CommonResponse;
 import com.nlu.filmweb.entity.CommonEntity;
 import com.nlu.filmweb.service.CommonService;
 import org.springframework.http.ResponseEntity;
@@ -13,31 +13,31 @@ import java.util.List;
 public abstract class CommonController<T extends CommonEntity> {
     protected CommonService<T> commonService;
 
-    public ResponseEntity<List<CommonDTO>> getAll() {
+    public ResponseEntity<List<CommonResponse>> getAll() {
         return ResponseEntity.ok(commonService.getAll());
     }
 
-    public ResponseEntity<CommonDTO> insert(@RequestBody CommonCreationDTO commonCreationDTO) {
-        CommonDTO commonDTO = commonService.insert(commonCreationDTO);
-        return ResponseEntity.ok(commonDTO);
+    public ResponseEntity<CommonResponse> insert(@RequestBody CommonRequest commonRequest) {
+        CommonResponse commonResponse = commonService.insert(commonRequest);
+        return ResponseEntity.ok(commonResponse);
     }
 
-    public ResponseEntity<CommonDTO> deleteById(@PathVariable Long id){
+    public ResponseEntity<CommonResponse> deleteById(@PathVariable Long id){
         var commonDTO = commonService.deleteById(id);
         return ResponseEntity.ok(commonDTO);
     }
 
-    public ResponseEntity<CommonDTO> updateByID(@PathVariable Long id, @RequestBody CommonCreationDTO commonCreationDTO){
-        CommonDTO commonDTO = commonService.update(id , commonCreationDTO);
-        return ResponseEntity.ok(commonDTO);
+    public ResponseEntity<CommonResponse> updateByID(@PathVariable Long id, @RequestBody CommonRequest commonRequest){
+        CommonResponse commonResponse = commonService.update(id , commonRequest);
+        return ResponseEntity.ok(commonResponse);
     }
 
-    public ResponseEntity<List<CommonDTO>> insertAll(@RequestBody List<CommonCreationDTO> commonCreationDTOs) {
-        List<CommonDTO> commonDTOS = new ArrayList<>();
-        for (var commonCreationDTO: commonCreationDTOs) {
-            commonDTOS.add(commonService.insert(commonCreationDTO));
+    public ResponseEntity<List<CommonResponse>> insertAll(@RequestBody List<CommonRequest> commonRequests) {
+        List<CommonResponse> commonResponses = new ArrayList<>();
+        for (var commonCreationDTO: commonRequests) {
+            commonResponses.add(commonService.insert(commonCreationDTO));
         }
-        return ResponseEntity.ok(commonDTOS);
+        return ResponseEntity.ok(commonResponses);
     }
 
     public void setCommonService(CommonService<T> commonService) {

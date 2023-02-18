@@ -1,7 +1,7 @@
 package com.nlu.filmweb.controller;
 
 import com.nlu.filmweb.exception.ResourceNotFoundException;
-import com.nlu.filmweb.payload.APIResponse;
+import com.nlu.filmweb.payload.response.APIResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

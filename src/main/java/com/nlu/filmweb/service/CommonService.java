@@ -1,7 +1,7 @@
 package com.nlu.filmweb.service;
 
-import com.nlu.filmweb.dto.CommonCreationDTO;
-import com.nlu.filmweb.dto.CommonDTO;
+import com.nlu.filmweb.payload.request.CommonRequest;
+import com.nlu.filmweb.payload.response.CommonResponse;
 import com.nlu.filmweb.exception.ResourceNotFoundException;
 
 import org.modelmapper.ModelMapper;
@@ -15,27 +15,27 @@ import java.util.List;
 import static com.nlu.filmweb.utils.AppConstant.CATEGORY;
 import static com.nlu.filmweb.utils.AppConstant.ID;
 
-public abstract class CommonService<T> implements CRUDService<CommonDTO, CommonDTO, CommonCreationDTO> {
+public abstract class CommonService<T> implements CRUDService<CommonResponse, CommonResponse, CommonRequest> {
     protected JpaRepository<T, Long> commonRepository;
     @Autowired
     protected ModelMapper mapper;
 
     @Override
-    public List<CommonDTO> getAll() {
-        Type listType = new TypeToken<List<CommonDTO>>(){}.getType();
+    public List<CommonResponse> getAll() {
+        Type listType = new TypeToken<List<CommonResponse>>(){}.getType();
         return mapper.map(commonRepository.findAll(), listType);
     }
 
     @Override
-    public CommonDTO deleteById(Long id) {
+    public CommonResponse deleteById(Long id) {
         var entity = commonRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Resource", ID, id));
         commonRepository.deleteById(id);
-        return mapper.map(entity, CommonDTO.class);
+        return mapper.map(entity, CommonResponse.class);
     }
 
-    public CommonDTO getById(Long id) {
+    public CommonResponse getById(Long id) {
         var commonEntity = commonRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(ID, CATEGORY, id));
-        return mapper.map(commonEntity, CommonDTO.class);
+        return mapper.map(commonEntity, CommonResponse.class);
     }
 
     public void setCommonRepository(JpaRepository<T, Long>  commonRepository) {

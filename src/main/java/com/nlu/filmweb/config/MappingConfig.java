@@ -1,16 +1,14 @@
 package com.nlu.filmweb.config;
 
-import com.nlu.filmweb.dto.*;
 import com.nlu.filmweb.entity.Actor;
 import com.nlu.filmweb.entity.Film;
+import com.nlu.filmweb.payload.response.ActorDetailsResponse;
+import com.nlu.filmweb.payload.response.FilmDetailsResponse;
+import com.nlu.filmweb.payload.response.FilmResponse;
 import org.modelmapper.*;
 import org.modelmapper.convention.MatchingStrategies;
-import org.modelmapper.spi.MappingContext;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.context.annotation.Bean;
-
-import java.lang.reflect.Type;
-import java.util.List;
 
 @SpringBootConfiguration
 public class MappingConfig {
@@ -25,21 +23,21 @@ public class MappingConfig {
     }
 }
 
-class ActorDetailConfig extends PropertyMap<Actor, ActorDetailDTO>{
+class ActorDetailConfig extends PropertyMap<Actor, ActorDetailsResponse>{
     @Override
     protected void configure() {
         map().setNationality(source.getCountry().getName());
     }
 }
 
-class FilmConfig extends PropertyMap<Film, FilmDTO>{
+class FilmConfig extends PropertyMap<Film, FilmResponse>{
     @Override
     protected void configure() {
         map().setLanguage(source.getLanguage().getName());
     }
 }
 
-class FilmDetailConfig extends PropertyMap<Film, FilmDetailDTO>{
+class FilmDetailConfig extends PropertyMap<Film, FilmDetailsResponse>{
     private ModelMapper mapper;
 
     FilmDetailConfig(ModelMapper mapper) {

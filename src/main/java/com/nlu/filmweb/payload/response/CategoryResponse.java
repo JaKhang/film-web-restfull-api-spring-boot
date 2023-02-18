@@ -1,4 +1,4 @@
-package com.nlu.filmweb.dto;
+package com.nlu.filmweb.payload.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,9 +7,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-public class CommonCreationDTO {
+@AllArgsConstructor
+public class CategoryResponse {
+    private Long id;
     private String name;
     private String code;
 }

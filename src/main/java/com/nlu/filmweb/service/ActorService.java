@@ -1,9 +1,9 @@
 package com.nlu.filmweb.service;
 
-import com.nlu.filmweb.dto.ActorCreationDTO;
-import com.nlu.filmweb.dto.ActorDTO;
-import com.nlu.filmweb.dto.ActorDetailDTO;
+import com.nlu.filmweb.payload.request.ActorRequest;
+import com.nlu.filmweb.payload.response.ActorResponse;
+import com.nlu.filmweb.payload.response.ActorDetailsResponse;
 
-public interface ActorService extends CRUDService<ActorDTO, ActorDetailDTO, ActorCreationDTO> {
+public interface ActorService extends CRUDService<ActorResponse, ActorDetailsResponse, ActorRequest> {
 
 }

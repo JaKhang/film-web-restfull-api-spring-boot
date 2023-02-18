@@ -1,6 +1,7 @@
-package com.nlu.filmweb.dto;
+package com.nlu.filmweb.payload.response;
 
 
+import com.nlu.filmweb.payload.response.CategoryResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,10 +13,10 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class FilmDTO {
+public class FilmResponse {
     private Long id;
     private String title;
     private String poster;
-    private List<CategoryDTO> categories;
+    private List<CategoryResponse> categories;
     private String language;
 }

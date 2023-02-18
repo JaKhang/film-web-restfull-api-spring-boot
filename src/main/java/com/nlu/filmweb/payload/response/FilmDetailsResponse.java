@@ -1,10 +1,11 @@
-package com.nlu.filmweb.dto;
+package com.nlu.filmweb.payload.response;
+import com.nlu.filmweb.payload.SourcePayload;
 import lombok.Data;
 
 import java.sql.Timestamp;
 import java.util.List;
 @Data
-public class FilmDetailDTO {
+public class FilmDetailsResponse {
     private Long id;
     private String title;
     private String subtitle;
@@ -14,15 +15,15 @@ public class FilmDetailDTO {
     private String trailer;
     private Integer duration;
     private Integer publishYear;
-    private CommonDTO producer;
+    private CommonResponse producer;
     private String language;
     private String status;
-    private CommonDTO country;
-    private List<ActorDTO> actors;
-    private List<CategoryDTO> categories;
+    private CommonResponse country;
+    private List<ActorResponse> actors;
+    private List<CategoryResponse> categories;
     private String quality;
-    private DirectorDTO director;
-    private List<SourceDTO> sourceFilms;
+    private DirectorResponse director;
+    private List<SourcePayload> sourceFilms;
     protected Timestamp lastModifiedDate;
     protected Timestamp createdDate;
 }

@@ -1,12 +1,11 @@
-package com.nlu.filmweb.dto;
+package com.nlu.filmweb.payload.response;
 
-import jakarta.persistence.Column;
 import lombok.Data;
 
 import java.util.Date;
 
 @Data
-public class DirectorDTO {
+public class DirectorResponse {
     private Long id;
     private String name;
     private Date dateOfBirth;

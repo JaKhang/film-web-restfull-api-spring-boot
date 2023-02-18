@@ -1,9 +1,8 @@
 package com.nlu.filmweb.service.impl;
 
-import com.nlu.filmweb.dto.ActorCreationDTO;
-import com.nlu.filmweb.dto.ActorDTO;
-import com.nlu.filmweb.dto.ActorDetailDTO;
-import com.nlu.filmweb.dto.CategoryDTO;
+import com.nlu.filmweb.payload.request.ActorRequest;
+import com.nlu.filmweb.payload.response.ActorResponse;
+import com.nlu.filmweb.payload.response.ActorDetailsResponse;
 import com.nlu.filmweb.entity.Actor;
 import com.nlu.filmweb.exception.ResourceNotFoundException;
 import com.nlu.filmweb.repository.ActorRepository;
@@ -35,43 +34,43 @@ public class DefaultActorService implements ActorService {
     }
 
     @Override
-    public List<ActorDTO> getAll() {
+    public List<ActorResponse> getAll() {
         var actors = actorRepository.findAll();
-        Type listType = new TypeToken<List<ActorDTO>>() {}.getType();
+        Type listType = new TypeToken<List<ActorResponse>>() {}.getType();
         return mapper.map(actors, listType);
     }
 
     @Override
-    public ActorDetailDTO deleteById(Long id) {
+    public ActorDetailsResponse deleteById(Long id) {
         var actor = actorRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(COUNTRY, ID, id));
         actorRepository.delete(actor);
-        return mapper.map(actor, ActorDetailDTO.class);
+        return mapper.map(actor, ActorDetailsResponse.class);
     }
 
     @Override
-    public ActorDetailDTO insert(ActorCreationDTO actorCreationDTO) {
-        var actor = mapper.map(actorCreationDTO, Actor.class);
-        var country = countryRepository.findById(actorCreationDTO.getCountryId()).orElseThrow(() -> new ResourceNotFoundException(COUNTRY, ID, actorCreationDTO.getCountryId()));
+    public ActorDetailsResponse insert(ActorRequest actorRequest) {
+        var actor = mapper.map(actorRequest, Actor.class);
+        var country = countryRepository.findById(actorRequest.getCountryId()).orElseThrow(() -> new ResourceNotFoundException(COUNTRY, ID, actorRequest.getCountryId()));
         actor.setCountry(country);
         actor = actorRepository.save(actor);
-        return mapper.map(actor, ActorDetailDTO.class);
+        return mapper.map(actor, ActorDetailsResponse.class);
     }
 
     @Override
-    public ActorDetailDTO update(Long id, ActorCreationDTO actorCreationDTO) {
+    public ActorDetailsResponse update(Long id, ActorRequest actorRequest) {
         if(!actorRepository.existsById(id))
             throw new ResourceNotFoundException(ACTOR, ID, id);
-        var country = countryRepository.findById(actorCreationDTO.getCountryId()).orElseThrow(() -> new ResourceNotFoundException(COUNTRY, ID, actorCreationDTO.getCountryId()));
-        var actor = mapper.map(actorCreationDTO, Actor.class);
+        var country = countryRepository.findById(actorRequest.getCountryId()).orElseThrow(() -> new ResourceNotFoundException(COUNTRY, ID, actorRequest.getCountryId()));
+        var actor = mapper.map(actorRequest, Actor.class);
         actor.setId(id);
         actor.setCountry(country);
         actor = actorRepository.save(actor);
-        return mapper.map(actor, ActorDetailDTO.class);
+        return mapper.map(actor, ActorDetailsResponse.class);
     }
 
     @Override
-    public ActorDetailDTO getById(Long id) {
+    public ActorDetailsResponse getById(Long id) {
         var actor = actorRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(COUNTRY, ID, id));
-        return mapper.map(actor, ActorDetailDTO.class);
+        return mapper.map(actor, ActorDetailsResponse.class);
     }
 }

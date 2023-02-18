@@ -1,6 +1,6 @@
 package com.nlu.filmweb.exception;
 
-import com.nlu.filmweb.payload.APIResponse;
+import com.nlu.filmweb.payload.response.APIResponse;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.http.HttpStatus;

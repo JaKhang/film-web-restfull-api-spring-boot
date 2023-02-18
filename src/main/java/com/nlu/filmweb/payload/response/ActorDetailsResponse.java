@@ -1,11 +1,11 @@
-package com.nlu.filmweb.dto;
+package com.nlu.filmweb.payload.response;
 
 
 import lombok.Data;
 
 import java.util.Date;
 @Data
-public class ActorDetailDTO {
+public class ActorDetailsResponse {
     private Long id;
     private String name;
     private String nationality;

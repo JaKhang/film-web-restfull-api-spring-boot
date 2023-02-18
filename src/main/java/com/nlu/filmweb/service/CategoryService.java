@@ -1,10 +1,8 @@
 package com.nlu.filmweb.service;
 
-import com.nlu.filmweb.dto.CategoryCreationDTO;
-import com.nlu.filmweb.dto.CategoryDTO;
+import com.nlu.filmweb.payload.request.CategoryRequest;
+import com.nlu.filmweb.payload.response.CategoryResponse;
 
-import java.util.List;
-
-public interface CategoryService extends CRUDService<CategoryDTO, CategoryDTO, CategoryCreationDTO>{
+public interface CategoryService extends CRUDService<CategoryResponse, CategoryResponse, CategoryRequest>{
 
 }

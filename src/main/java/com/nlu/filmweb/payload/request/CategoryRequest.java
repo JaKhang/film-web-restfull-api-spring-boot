@@ -1,4 +1,4 @@
-package com.nlu.filmweb.dto;
+package com.nlu.filmweb.payload.request;
 
 import lombok.*;
 
@@ -6,7 +6,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class CategoryCreationDTO {
+public class CategoryRequest {
     private String code;
     public String name;
 }

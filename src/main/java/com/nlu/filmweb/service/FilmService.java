@@ -1,16 +1,16 @@
 package com.nlu.filmweb.service;
 
-import com.nlu.filmweb.dto.FilmCreationDTO;
-import com.nlu.filmweb.dto.FilmDTO;
-import com.nlu.filmweb.dto.FilmDetailDTO;
-import com.nlu.filmweb.dto.SourceDTO;
+import com.nlu.filmweb.payload.request.FilmRequest;
+import com.nlu.filmweb.payload.response.FilmResponse;
+import com.nlu.filmweb.payload.response.FilmDetailsResponse;
+import com.nlu.filmweb.payload.SourcePayload;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-public interface FilmService extends CRUDService<FilmDTO, FilmDetailDTO, FilmCreationDTO>{
-    Page<FilmDTO> getAll(Pageable pageable);
+public interface FilmService extends CRUDService<FilmResponse, FilmDetailsResponse, FilmRequest>{
+    Page<FilmResponse> getAll(Pageable pageable);
 
-    SourceDTO addSourceFilm(Long filmId, SourceDTO sourceDTO);
+    SourcePayload addSourceFilm(Long filmId, SourcePayload sourcePayload);
 
-    Page<FilmDTO> getAllByCategory(Long categoryId, Pageable pageable);
+    Page<FilmResponse> getAllByCategory(Long categoryId, Pageable pageable);
 }

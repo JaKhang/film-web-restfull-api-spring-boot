@@ -1,10 +1,8 @@
 package com.nlu.filmweb.service;
 
-import com.nlu.filmweb.dto.CommonCreationDTO;
-import com.nlu.filmweb.dto.CommonDTO;
+import com.nlu.filmweb.payload.request.CommonRequest;
+import com.nlu.filmweb.payload.response.CommonResponse;
 
-import java.util.List;
-
-public interface CountryService extends CRUDService<CommonDTO, CommonDTO, CommonCreationDTO>{
+public interface CountryService extends CRUDService<CommonResponse, CommonResponse, CommonRequest>{
 
 }

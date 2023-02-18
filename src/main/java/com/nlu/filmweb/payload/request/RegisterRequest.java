@@ -1,4 +1,4 @@
-package com.nlu.filmweb.payload;
+package com.nlu.filmweb.payload.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

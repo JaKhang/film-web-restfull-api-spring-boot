@@ -1,4 +1,4 @@
-package com.nlu.filmweb.dto;
+package com.nlu.filmweb.payload.request;
 
 
 
@@ -7,7 +7,7 @@ import lombok.*;
 import java.util.List;
 
 @Data
-public class FilmCreationDTO {
+public class FilmRequest {
     private String title;
     private String subtitle;
     private String shortDescription;

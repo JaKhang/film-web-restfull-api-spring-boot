@@ -1,7 +1,7 @@
 package com.nlu.filmweb.service.impl;
 
-import com.nlu.filmweb.dto.CommonCreationDTO;
-import com.nlu.filmweb.dto.CommonDTO;
+import com.nlu.filmweb.payload.request.CommonRequest;
+import com.nlu.filmweb.payload.response.CommonResponse;
 import com.nlu.filmweb.entity.Producer;
 import com.nlu.filmweb.exception.ResourceNotFoundException;
 import com.nlu.filmweb.service.CommonService;
@@ -19,17 +19,17 @@ public class DefaultProducerService extends CommonService<Producer> {
         super.setCommonRepository(commonRepository);
     }
     @Override
-    public CommonDTO update(Long id, CommonCreationDTO commonCreationDTO) {
+    public CommonResponse update(Long id, CommonRequest commonRequest) {
         var quality = commonRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(COUNTRY, ID, id));
-        quality.setCode(commonCreationDTO.getCode());
-        quality.setName(commonCreationDTO.getName());
-        return mapper.map(quality, CommonDTO.class);
+        quality.setCode(commonRequest.getCode());
+        quality.setName(commonRequest.getName());
+        return mapper.map(quality, CommonResponse.class);
     }
 
     @Override
-    public CommonDTO insert(CommonCreationDTO qualityDTO) {
+    public CommonResponse insert(CommonRequest qualityDTO) {
         var quality = mapper.map(qualityDTO, Producer.class);
-        return mapper.map(commonRepository.save(quality), CommonDTO.class);
+        return mapper.map(commonRepository.save(quality), CommonResponse.class);
     }
 
 }

@@ -1,4 +1,4 @@
-package com.nlu.filmweb.dto;
+package com.nlu.filmweb.payload.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,10 +7,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-public class CategoryDTO {
-    private Long id;
+@NoArgsConstructor
+public class CommonRequest {
     private String name;
     private String code;
 }

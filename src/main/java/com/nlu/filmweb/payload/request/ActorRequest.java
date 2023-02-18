@@ -1,4 +1,4 @@
-package com.nlu.filmweb.dto;
+package com.nlu.filmweb.payload.request;
 
 import lombok.*;
 
@@ -9,7 +9,7 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ActorCreationDTO {
+public class ActorRequest {
     private String name;
     private Long countryId;
     private Date dateOfBirth;
