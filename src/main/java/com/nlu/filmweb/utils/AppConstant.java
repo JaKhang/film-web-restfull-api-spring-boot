@@ -8,4 +8,6 @@ public interface AppConstant {
     String DIRECTOR = "Director";
     String PRODUCER = "Producer";
     String ACTOR = "Actor";
+    String ADMIN = "ADMIN";
+    String USER = "USER";
 }
