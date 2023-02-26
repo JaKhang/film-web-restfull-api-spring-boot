@@ -2,6 +2,7 @@ package com.nlu.filmweb.service;
 
 import com.nlu.filmweb.entity.Role;
 import com.nlu.filmweb.entity.User;
+import com.nlu.filmweb.exception.UsernameNotFoundException;
 import com.nlu.filmweb.payload.request.AuthenticationRequest;
 import com.nlu.filmweb.payload.request.RegisterRequest;
 import com.nlu.filmweb.payload.response.AuthenticationResponse;
@@ -13,18 +14,19 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import static com.nlu.filmweb.utils.AppConstant.USER;
+
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
     private final UserRepository repository;
-
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
     public AuthenticationResponse register(RegisterRequest request) {
-        var role = roleRepository.findById(1L).orElseThrow();
+        var role = roleRepository.findByCode(USER).orElseThrow();
         var user = User.builder()
                 .username(request.getUsername())
                 .email(request.getEmail())
@@ -40,14 +42,15 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
+        if(!repository.existsByUsernameOrEmail(request.getUsername(), request.getUsername()))
+            throw new UsernameNotFoundException(request.getUsername());
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getUsername(),
                         request.getPassword()
                 )
         );
-        var user = repository.findUserByUsernameOrEmail(request.getUsername(), request.getUsername())
-                .orElseThrow();
+        var user = repository.findUserByUsernameOrEmail(request.getUsername(), request.getUsername()).orElseThrow(() -> new UsernameNotFoundException(request.getUsername()));
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwtToken)

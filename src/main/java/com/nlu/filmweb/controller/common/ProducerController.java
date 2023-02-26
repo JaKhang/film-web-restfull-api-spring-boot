@@ -18,13 +18,13 @@ public class ProducerController extends CommonController<Producer> {
 
 
     @Override
-    @PostMapping("")
+    @GetMapping("")
     public ResponseEntity<List<CommonResponse>> getAll() {
         return super.getAll();
     }
 
     @Override
-    @PostMapping("/")
+    @PostMapping("")
     public ResponseEntity<CommonResponse> insert(@RequestBody CommonRequest commonRequest) {
         return super.insert(commonRequest);
     }

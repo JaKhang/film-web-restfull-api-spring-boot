@@ -10,4 +10,6 @@ public interface AppConstant {
     String ACTOR = "Actor";
     String ADMIN = "ADMIN";
     String USER = "USER";
+
+    String USER_NAME = "Username";
 }

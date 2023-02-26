@@ -20,8 +20,7 @@ public class APIResponse implements Serializable {
 
     private String message;
 
-    @JsonIgnore
-    private HttpStatus status;
+    private Integer status;
 
     public APIResponse() {
 
@@ -31,9 +30,9 @@ public class APIResponse implements Serializable {
         this.message = message;
     }
 
-    public APIResponse(Boolean success, String message, HttpStatus httpStatus) {
+    public APIResponse(Boolean success, String message, Integer statusCode) {
         this.success = success;
         this.message = message;
-        this.status = httpStatus;
+        this.status = statusCode;
     }
 }

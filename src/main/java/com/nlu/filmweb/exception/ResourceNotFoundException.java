@@ -11,7 +11,7 @@ import java.io.Serial;
 @ResponseStatus(HttpStatus.NOT_FOUND)
 @Getter
 @Setter
-public class ResourceNotFoundException extends RuntimeException{
+public class ResourceNotFoundException extends RuntimeException implements ApiException {
     @Serial
     private static final long serialVersionUID = 1L;
 
@@ -24,13 +24,11 @@ public class ResourceNotFoundException extends RuntimeException{
         this.resourceName = resourceName;
         this.fieldName = fieldName;
         this.fieldValue = fieldValue;
-        setApiResponse();
     }
-    private transient APIResponse apiResponse;
 
-
-    private void setApiResponse() {
-        String message = String.format("%s not found with %s: '%s'", resourceName, fieldName, fieldValue);
-        apiResponse = new APIResponse(Boolean.FALSE, message);
+    @Override
+    public APIResponse getAPIResponse() {
+        String message = String.format("%s not found with %s: '%s'", fieldName, resourceName, fieldValue);
+        return new APIResponse(Boolean.FALSE, message, HttpStatus.NOT_FOUND.value());
     }
 }

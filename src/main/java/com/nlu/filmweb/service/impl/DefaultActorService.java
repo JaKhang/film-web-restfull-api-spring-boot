@@ -1,5 +1,6 @@
 package com.nlu.filmweb.service.impl;
 
+import com.nlu.filmweb.entity.Country;
 import com.nlu.filmweb.payload.request.ActorRequest;
 import com.nlu.filmweb.payload.response.ActorResponse;
 import com.nlu.filmweb.payload.response.ActorDetailsResponse;
@@ -50,7 +51,10 @@ public class DefaultActorService implements ActorService {
     @Override
     public ActorDetailsResponse insert(ActorRequest actorRequest) {
         var actor = mapper.map(actorRequest, Actor.class);
-        var country = countryRepository.findById(actorRequest.getCountryId()).orElseThrow(() -> new ResourceNotFoundException(COUNTRY, ID, actorRequest.getCountryId()));
+        Country country = null;
+        if(actorRequest.getCountryId() != null){
+            country = countryRepository.findById(actorRequest.getCountryId()).orElseThrow(() -> new ResourceNotFoundException(COUNTRY, ID, actorRequest.getCountryId()));
+        }
         actor.setCountry(country);
         actor = actorRepository.save(actor);
         return mapper.map(actor, ActorDetailsResponse.class);

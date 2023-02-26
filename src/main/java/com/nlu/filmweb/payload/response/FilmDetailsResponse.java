@@ -1,5 +1,9 @@
 package com.nlu.filmweb.payload.response;
 import com.nlu.filmweb.payload.SourcePayload;
+import com.nlu.filmweb.payload.response.ActorResponse;
+import com.nlu.filmweb.payload.response.CategoryResponse;
+import com.nlu.filmweb.payload.response.CommonResponse;
+import com.nlu.filmweb.payload.response.DirectorResponse;
 import lombok.Data;
 
 import java.sql.Timestamp;

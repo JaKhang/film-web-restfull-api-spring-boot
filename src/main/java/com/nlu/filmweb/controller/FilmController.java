@@ -1,10 +1,10 @@
 package com.nlu.filmweb.controller;
 
-import com.nlu.filmweb.payload.request.FilmRequest;
-import com.nlu.filmweb.payload.response.FilmResponse;
-import com.nlu.filmweb.payload.response.FilmDetailsResponse;
-import com.nlu.filmweb.payload.SourcePayload;
 import com.nlu.filmweb.service.FilmService;
+import com.nlu.filmweb.payload.SourcePayload;
+import com.nlu.filmweb.payload.request.FilmRequest;
+import com.nlu.filmweb.payload.response.FilmDetailsResponse;
+import com.nlu.filmweb.payload.response.FilmResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -37,7 +37,7 @@ public class FilmController {
                                                      @RequestParam(defaultValue = "10") Integer limit,
                                                      @RequestParam(defaultValue = "publishYear") String sortBy,
                                                      @RequestParam(defaultValue = "DESC") String direction){
-        var sorter = Sort.by(Sort.Direction.valueOf(direction.toUpperCase()), sortBy, "createdBy");
+        var sorter = Sort.by(Sort.Direction.valueOf(direction.toUpperCase()), sortBy, "createdDate");
         var pageRequest = PageRequest.of(page, limit, sorter);
         return ResponseEntity.ok(filmService.getAll(pageRequest));
     }
@@ -48,9 +48,40 @@ public class FilmController {
                                                                @RequestParam(defaultValue = "10") Integer limit,
                                                                @RequestParam(defaultValue = "publishYear") String sortBy,
                                                                @RequestParam(defaultValue = "DESC") String direction) {
-        var sorter = Sort.by(Sort.Direction.valueOf(direction.toUpperCase()), sortBy, "createdBy");
+        var sorter = Sort.by(Sort.Direction.valueOf(direction.toUpperCase()), sortBy, "createdDate");
         var pageRequest = PageRequest.of(page, limit, sorter);
         return ResponseEntity.ok(filmService.getAllByCategory(categoryId, pageRequest));
+    }
+
+    @GetMapping("/query")
+    public ResponseEntity<Page<FilmResponse>> searchFullText(@RequestParam String query,
+                                                              @RequestParam(defaultValue = "0") Integer page,
+                                                              @RequestParam(defaultValue = "10") Integer limit,
+                                                              @RequestParam(defaultValue = "publishYear") String sortBy,
+                                                              @RequestParam(defaultValue = "DESC") String direction){
+        var sorter = Sort.by(Sort.Direction.valueOf(direction.toUpperCase()), camelToSnake(sortBy));
+        var pageRequest = PageRequest.of(page, limit, sorter);
+        return ResponseEntity.ok(filmService.searchFullText(query, pageRequest));
+    }
+    @GetMapping("/filter")
+    public ResponseEntity<Page<FilmResponse>> filter(        @RequestParam(defaultValue = "0") Integer publishYear,
+                                                             @RequestParam(defaultValue = "0") Long categoryId,
+                                                             @RequestParam(defaultValue = "0") Integer page,
+                                                             @RequestParam(defaultValue = "10") Integer limit,
+                                                             @RequestParam(defaultValue = "publishYear") String sortBy,
+                                                             @RequestParam(defaultValue = "DESC") String direction) {
+        var sorter = Sort.by(Sort.Direction.valueOf(direction.toUpperCase()), sortBy);
+        var pageRequest = PageRequest.of(page, limit, sorter);
+        if(publishYear == 0 && categoryId == 0){
+            return ResponseEntity.ok(filmService.getAll(pageRequest));
+        }
+        if(publishYear == 0){
+            return ResponseEntity.ok(filmService.getAllByCategory(categoryId, pageRequest));
+        }
+        if(categoryId == 0){
+            return ResponseEntity.ok(filmService.getAllByPublishYear(publishYear, pageRequest));
+        }
+        return ResponseEntity.ok(filmService.getAllByCategoryAnhPublishYear(categoryId, publishYear, pageRequest));
     }
 
 
@@ -95,6 +126,38 @@ public class FilmController {
         return ResponseEntity.ok(filmService.update(id, filmRequest));
     }
 
+    private String camelToSnake(String str) {
 
+        // Empty String
+        StringBuilder result = new StringBuilder();
+
+        // Append first character(in lower case)
+        // to result string
+        char c = str.charAt(0);
+        result.append(Character.toLowerCase(c));
+
+        // Traverse the string from
+        // ist index to last index
+        for (int i = 1; i < str.length(); i++) {
+
+            char ch = str.charAt(i);
+
+            // Check if the character is upper case
+            // then append '_' and such character
+            // (in lower case) to result string
+            if (Character.isUpperCase(ch)) {
+                result.append('_');
+                result.append(Character.toLowerCase(ch));
+            }
+
+            // If the character is lower case then
+            // add such character into result string
+            else {
+                result.append(ch);
+            }
+        }
+        return result.toString();
+
+    }
 
 }

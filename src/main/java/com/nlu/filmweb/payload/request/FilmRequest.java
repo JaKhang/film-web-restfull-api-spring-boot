@@ -2,8 +2,10 @@ package com.nlu.filmweb.payload.request;
 
 
 
+import com.nlu.filmweb.payload.SourcePayload;
 import lombok.*;
 
+import java.util.LinkedList;
 import java.util.List;
 
 @Data
@@ -13,6 +15,7 @@ public class FilmRequest {
     private String shortDescription;
     private String content;
     private Integer duration;
+    private String trailer;
     private Long producerId;
     private Long directorId;
     private Long countryId;
@@ -23,5 +26,6 @@ public class FilmRequest {
     private List<Long> categoryIds;
     private List<Long> actorIds;
     private Integer publishYear;
+    private List<SourcePayload> sourceFilms = new LinkedList<>();
 
 }

@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("/api/v1/categories")
 public class CategoryController {
     @Autowired
